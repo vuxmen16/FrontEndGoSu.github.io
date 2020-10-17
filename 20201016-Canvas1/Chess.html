@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="chess"></canvas>
+    <script>
+        const khungBanCoVua = document.getElementById('chess')
+        const veBanCoVua = khungBanCoVua.getContext('2d')
+        khungBanCoVua.width = 600
+        khungBanCoVua.height = 600
+        khungBanCoVua.style.border = '1px solid black'
+        class oVuong {
+            constructor(x, y, b, c) {
+                this.toaDoX = x;
+                this.toaDoY = y;
+                this.canhHV = b;
+                this.mau = c;
+            }
+
+            veHinhVuong() {
+                veBanCoVua.beginPath()
+                veBanCoVua.rect(this.toaDoX, this.toaDoY, this.canhHV, this.canhHV)
+                veBanCoVua.fillStyle = this.mau
+                veBanCoVua.fill()
+            }
+        }
+
+        class oChuNhat {
+            constructor(x, y, a, b, t) {
+                this.toaDoX = x;
+                this.toaDoY = y;
+                this.width = a;
+                this.height = b;
+                this.text = t;
+            }
+
+            veChuNhat() {
+                veBanCoVua.beginPath()
+                veBanCoVua.fillStyle = '#d5dde7'
+                veBanCoVua.textAlign = 'center'
+                veBanCoVua.font = 'bold 16px Cambria'
+                veBanCoVua.fillText(this.text, this.toaDoX + this.width / 2, this.toaDoY + 6 + this.height / 2)
+            }
+        }
+
+        let chuNhatTo = new oVuong(20,20,560,'#a5512f')
+        chuNhatTo.veHinhVuong()
+
+        for (let j = 1; j < 9; j++) {
+            let draw = new oChuNhat(20, j * 60, 40, 60, String.fromCharCode(57 - j))
+            draw.veChuNhat()
+
+            let draw1 = new oChuNhat(j * 60, 540, 60, 40, String.fromCharCode(64 + j))
+            draw1.veChuNhat()
+        }
+
+        veBanCoVua.translate(600, 600)
+        veBanCoVua.rotate(Math.PI)
+        for (let i = 1; i < 9; i++) {
+            let draw = new oChuNhat(i * 60, 540, 60, 40, String.fromCharCode(73 - i))
+            draw.veChuNhat()
+
+            let draw1 = new oChuNhat(20, i * 60, 40, 60, String.fromCharCode(48 + i))
+            draw1.veChuNhat()
+        }
+        veBanCoVua.translate(600, 600)
+        veBanCoVua.rotate(Math.PI)        
+
+        for (let i = 1; i < 9; i++)
+            for (let j = 1; j < 9; j++)
+                if ((i + j) % 2 != 0) {
+                    let draw = new oVuong(i * 60, j * 60, 60, '#edcd9c')
+                    draw.veHinhVuong()
+                }
+
+        veBanCoVua.beginPath()
+        veBanCoVua.rect(60, 60, 480, 480)
+        veBanCoVua.strokeStyle = '#edcd9c'
+        veBanCoVua.lineWidth = 1
+        veBanCoVua.stroke()
+    </script>
+</body>
+
+</html>
